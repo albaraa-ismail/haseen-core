@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  api:
+    build: .
+    container_name: haseen_api
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://haseen:secure_pass@db:5432/haseen_db
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    container_name: haseen_db
+    environment:
+      POSTGRES_DB: haseen_db
+      POSTGRES_USER: haseen
+      POSTGRES_PASSWORD: secure_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
